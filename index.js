@@ -127,17 +127,23 @@ async function deleteBatch(deploymentIds) {
     )
   }
 
-  for (id of deploymentIds) {
-    if (productionDeploymentId !== null && id === productionDeploymentId) {
-      console.log(`Skipping production deployment: ${id}`)
-    } else {
-      try {
-        await deleteDeployment(id)
-        await sleep(500)
-      } catch (error) {
-        console.log(error)
-      }
-    }
+  const CONCURRENCY = 5
+  for (let i = 0; i < deploymentIds.length; i += CONCURRENCY) {
+    const chunk = deploymentIds.slice(i, i + CONCURRENCY)
+    await Promise.all(
+      chunk.map(async (id) => {
+        if (productionDeploymentId !== null && id === productionDeploymentId) {
+          console.log(`Skipping production deployment: ${id}`)
+        } else {
+          try {
+            await deleteDeployment(id)
+            await sleep(500)
+          } catch (error) {
+            console.log(error)
+          }
+        }
+      })
+    )
   }
 }
 
