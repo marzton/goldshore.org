@@ -1,6 +1,49 @@
 import GPTHandler from "./gpt-handler.js";
 
 /**
+ * Parses a comma-separated list of origin candidates and returns the first valid one.
+ * If no valid candidates are found, it returns the provided fallback.
+ *
+ * @param {string|undefined} value The raw string to parse.
+ * @param {string} fallback The default value if parsing fails.
+ * @returns {string} The resolved origin.
+ */
+export const parseOriginList = (value, fallback) => {
+  if (!value) {
+    return fallback;
+  }
+
+  const candidates = value.split(",");
+  for (const candidate of candidates) {
+    const trimmed = candidate.trim();
+    if (!trimmed) {
+      continue;
+    }
+
+    const withScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(trimmed)
+      ? trimmed
+      : `https://${trimmed}`;
+
+    try {
+      const url = new URL(withScheme);
+      if (url.protocol !== "http:" && url.protocol !== "https:") {
+        continue;
+      }
+
+      const pathname = url.pathname.endsWith("/") && url.pathname !== "/"
+        ? url.pathname.slice(0, -1)
+        : url.pathname;
+
+      return `${url.protocol}//${url.host}${pathname}`;
+    } catch (error) {
+      // Ignore invalid candidates and continue to the next option.
+    }
+  }
+
+  return fallback;
+};
+
+/**
  * Cloudflare Worker router that forwards traffic for goldshore properties to
  * the appropriate Cloudflare Pages deployment.
  *
@@ -16,41 +59,6 @@ export default {
     if (incomingURL.pathname === "/api/gpt") {
       return GPTHandler.fetch(request, env, ctx);
     }
-
-    const parseOriginList = (value, fallback) => {
-      if (!value) {
-        return fallback;
-      }
-
-      const candidates = value.split(",");
-      for (const candidate of candidates) {
-        const trimmed = candidate.trim();
-        if (!trimmed) {
-          continue;
-        }
-
-        const withScheme = /^[a-z][a-z0-9+.-]*:\/\//i.test(trimmed)
-          ? trimmed
-          : `https://${trimmed}`;
-
-        try {
-          const url = new URL(withScheme);
-          if (url.protocol !== "http:" && url.protocol !== "https:") {
-            continue;
-          }
-
-          const pathname = url.pathname.endsWith("/") && url.pathname !== "/"
-            ? url.pathname.slice(0, -1)
-            : url.pathname;
-
-          return `${url.protocol}//${url.host}${pathname}`;
-        } catch (error) {
-          // Ignore invalid candidates and continue to the next option.
-        }
-      }
-
-      return fallback;
-    };
 
     const targetOrigin = env.ASSETS_ORIGIN
       || parseOriginList(env.PRODUCTION_ASSETS, "https://goldshore-org.pages.dev");
