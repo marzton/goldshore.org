@@ -84,7 +84,7 @@ export async function handleWebhook(
     throw new Error("Missing GITHUB_WEBHOOK_SECRET environment variable");
   }
 
-  const valid = await verifyGitHubWebhook(payloadText, signature, secret);
+  const valid = await verifyGitHubWebhook(secret, signature ?? "", payloadText);
   if (!valid) {
     return respond(JSON.stringify({ error: "Invalid signature" }), { status: 401 });
   }
