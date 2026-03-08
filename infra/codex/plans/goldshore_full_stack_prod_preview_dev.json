@@ -170,7 +170,92 @@
       "endpoint_template": "/client/v4/zones/${ZONE_ID}/workers/routes/${item.id}"
     },
     {
+      "id": "workers_routes_post_cleanup",
+      "op": "GET",
+      "endpoint": "/client/v4/zones/${ZONE_ID}/workers/routes",
+      "save_as": {
+        "ROUTES": ".result"
+      }
+    },
+    {
       "id": "api_route_upserts",
+      "op": "BATCH",
+      "calls": [
+        {
+          "op": "UPSERT",
+          "match_from": "ROUTES",
+          "match_when": "(.pattern==\"api.goldshore.org/*\")",
+          "create": {
+            "endpoint": "/client/v4/zones/${ZONE_ID}/workers/routes",
+            "method": "POST",
+            "json": {
+              "pattern": "api.goldshore.org/*",
+              "script": "${API_WORKER}"
+            }
+          },
+          "update": {
+            "endpoint_template": "/client/v4/zones/${ZONE_ID}/workers/routes/${item.id}",
+            "method": "PUT",
+            "json": {
+              "pattern": "api.goldshore.org/*",
+              "script": "${API_WORKER}"
+            }
+          }
+        },
+        {
+          "op": "UPSERT",
+          "match_from": "ROUTES",
+          "match_when": "(.pattern==\"api-preview.goldshore.org/*\")",
+          "create": {
+            "endpoint": "/client/v4/zones/${ZONE_ID}/workers/routes",
+            "method": "POST",
+            "json": {
+              "pattern": "api-preview.goldshore.org/*",
+              "script": "${API_WORKER}"
+            }
+          },
+          "update": {
+            "endpoint_template": "/client/v4/zones/${ZONE_ID}/workers/routes/${item.id}",
+            "method": "PUT",
+            "json": {
+              "pattern": "api-preview.goldshore.org/*",
+              "script": "${API_WORKER}"
+            }
+          }
+        },
+        {
+          "op": "UPSERT",
+          "match_from": "ROUTES",
+          "match_when": "(.pattern==\"api-dev.goldshore.org/*\")",
+          "create": {
+            "endpoint": "/client/v4/zones/${ZONE_ID}/workers/routes",
+            "method": "POST",
+            "json": {
+              "pattern": "api-dev.goldshore.org/*",
+              "script": "${API_WORKER}"
+            }
+          },
+          "update": {
+            "endpoint_template": "/client/v4/zones/${ZONE_ID}/workers/routes/${item.id}",
+            "method": "PUT",
+            "json": {
+              "pattern": "api-dev.goldshore.org/*",
+              "script": "${API_WORKER}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "access_apps",
+      "op": "GET",
+      "endpoint": "/client/v4/accounts/${CF_ACCOUNT_ID}/access/apps",
+      "save_as": {
+        "ACCESS_APPS": ".result"
+      }
+    },
+    {
+      "id": "access_admin_upsert",
       "op": "BATCH",
       "calls": [
         {
