@@ -21,16 +21,20 @@ function toHex(bytes: ArrayBuffer): string {
   return output;
 }
 
+/**
+ * Verifies a GitHub Webhook signature.
+ * Argument order: (secret, signature, payload) - matching task description.
+ */
 export async function verifyGitHubWebhook(
-  payload: string,
-  signature256: string | null,
-  secret: string
+  secret: string,
+  signature: string,
+  payload: string
 ): Promise<boolean> {
   if (!secret) {
     throw new Error("Missing GITHUB_WEBHOOK_SECRET environment variable");
   }
 
-  if (!signature256 || !signature256.startsWith("sha256=")) {
+  if (!signature || !signature.startsWith("sha256=")) {
     return false;
   }
 
@@ -45,5 +49,5 @@ export async function verifyGitHubWebhook(
   const digest = await crypto.subtle.sign("HMAC", key, encoder.encode(payload));
   const expected = `sha256=${toHex(digest)}`;
 
-  return timingSafeEqual(expected, signature256);
+  return timingSafeEqual(expected, signature);
 }
