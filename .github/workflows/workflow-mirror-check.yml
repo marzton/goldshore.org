@@ -1,0 +1,25 @@
+name: Verify workflow mirrors
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/**"
+      - "infra/github/actions/workflows/**"
+      - "scripts/check-workflow-mirrors.sh"
+      - "scripts/sync-workflow-mirrors.sh"
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/**"
+      - "infra/github/actions/workflows/**"
+      - "scripts/check-workflow-mirrors.sh"
+      - "scripts/sync-workflow-mirrors.sh"
+  workflow_dispatch: {}
+
+jobs:
+  check-workflow-mirrors:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check mirrored workflows
+        run: ./scripts/check-workflow-mirrors.sh

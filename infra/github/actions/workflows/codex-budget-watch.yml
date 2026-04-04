@@ -1,3 +1,4 @@
+# Canonical workflow location: .github/workflows/
 name: Codex Budget Watch
 
 on:
