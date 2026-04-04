@@ -24,7 +24,8 @@ routes = [
 ]
 
 [env.production.vars]
-ASSETS_ORIGIN = "https://goldshore.org"
+ASSETS_ORIGIN = "https://goldshore-org.pages.dev"
+# Do not point ASSETS_ORIGIN at a Worker-managed custom domain; it can recurse through this same route.
 CF_ACCESS_AUD = "3d5916af31a595ca00d8b1ab0157361a953779d939d9df2f63b1802b87a0248e"
 CF_ACCESS_ISS = "https://rmarston.cloudflareaccess.com"
 CF_ACCESS_JWKS_URL = "https://rmarston.cloudflareaccess.com/cdn-cgi/access/certs"
@@ -42,7 +43,8 @@ dataset = "goldshore-web-events"
 routes = ["preview.goldshore.org/*"]
 
 [env.preview.vars]
-ASSETS_ORIGIN = "https://preview.goldshore.org"
+ASSETS_ORIGIN = "https://goldshore-org-preview.pages.dev"
+# Keep ASSETS_ORIGIN on non-routed Pages hostnames to avoid Worker self-targeting loops.
 
 [[env.preview.services]]
 binding = "API"
@@ -53,7 +55,8 @@ environment = "preview"
 routes = ["dev.goldshore.org/*"]
 
 [env.development.vars]
-ASSETS_ORIGIN = "https://dev.goldshore.org"
+ASSETS_ORIGIN = "https://goldshore-org-dev.pages.dev"
+# Keep ASSETS_ORIGIN on non-routed Pages hostnames to avoid Worker self-targeting loops.
 
 [[env.development.services]]
 binding = "API"
