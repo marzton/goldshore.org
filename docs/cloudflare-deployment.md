@@ -16,18 +16,22 @@ These origin domains stay on the free tier and do not incur Worker usage.
 The Worker in `src/router.js` proxies requests to the appropriate origin. Configure its environment variables with Wrangler so only production traffic touches the Worker.
 
 ```bash
+# Development router (local test)
+wrangler dev --config wrangler.toml --env development
+
 # Preview (runs on *.workers.dev)
-wrangler deploy --env preview
+wrangler deploy --config wrangler.toml --env preview
 
 # Production (mapped to the apex + www)
-wrangler deploy --env production
+wrangler deploy --config wrangler.toml --env production
 ```
 
-- `PRODUCTION_ORIGIN` is configured in `wrangler.toml` and should point at the static site that already renders the full experience (e.g. `https://goldshore-org.pages.dev`).
-- `PREVIEW_ORIGIN` is set for the preview environment so Git branches stay on the Pages hostname without touching the Worker.
-- `CACHE_TTL` (default `300` seconds) keeps the Worker cost low by letting Cloudflare cache responses on GET/HEAD requests.
-- `ALLOWED_HOSTNAMES` is a comma-separated allow list enforced in production so only `goldshore.org` routes can consume Worker invocations.
-- `CANONICAL_HOSTNAME` controls the redirect target when requests arrive on an unexpected host; set it to `goldshore.org` to collapse stray traffic back to the primary domain.
+Use root `wrangler.toml` as the canonical router config for all production/preview/development router commands in this repo.
+
+- `PRODUCTION_ASSETS` is configured in `wrangler.toml` and should point at the static site that already renders the full experience (e.g. `https://goldshore-org.pages.dev`).
+- `PREVIEW_ASSETS` is set for the preview environment so Git branches stay on the Pages hostname without touching the Worker.
+- `DEV_ASSETS` and the per-environment `ASSETS_ORIGIN` values keep production, preview, and development traffic pinned to the correct Pages deployment.
+- `GPT_ALLOWED_ORIGINS` should include every browser origin allowed to call `/api/gpt`.
 
 ### Required Worker secrets
 
