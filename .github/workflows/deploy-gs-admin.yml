@@ -1,0 +1,41 @@
+name: Deploy gs-admin (production)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy gs-admin to Pages main branch
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate gs-admin app path
+        run: |
+          if [ ! -d "apps/gs-admin" ]; then
+            echo "::error::Expected app path apps/gs-admin was not found in this branch."
+            exit 1
+          fi
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build gs-admin
+        run: npm run build --workspace apps/gs-admin
+
+      - name: Deploy production to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx wrangler pages deploy apps/gs-admin/dist \
+            --project-name gs-admin \
+            --branch main

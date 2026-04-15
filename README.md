@@ -64,10 +64,13 @@ See the [Gold Shore Web & Worker Implementation Guide](./GOLDSHORE_IMPLEMENTATIO
 
 | Command | Description |
 | --- | --- |
-| `pnpm run deploy:prod` | Deploy the Worker using the `production` environment in `wrangler.worker.toml`. |
-| `pnpm run deploy:preview` | Deploy the Worker to the preview environment. |
-| `pnpm run deploy:dev` | Deploy the Worker to the dev environment. |
+| `pnpm run deploy:prod` | Deploy the router Worker with `wrangler.toml` + `production` environment. |
+| `pnpm run deploy:preview` | Deploy the router Worker with `wrangler.toml` + `preview` environment. |
+| `pnpm run deploy:dev` | Deploy the router Worker with `wrangler.toml` + `development` environment. |
+| `pnpm run dev:router` | Run the router Worker locally with `wrangler.toml` + `development` environment. |
 | `pnpm run qa` | Execute the local QA helper (`.github/workflows/local-qa.mjs`). |
+
+> **Single source of truth:** Root-level router deploys always use `wrangler.toml`. The legacy `wrangler.worker.toml` config is for the standalone `goldshore-api` Worker and is not used by `deploy:prod`, `deploy:preview`, or `deploy:dev`.
 
 ## `/api/gpt` proxy handler
 

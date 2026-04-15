@@ -1,0 +1,38 @@
+name: Preview deploy gs-web
+
+on:
+  pull_request:
+    paths:
+      - "apps/goldshore-web/**"
+      - ".github/workflows/preview-gs-web.yml"
+  workflow_dispatch:
+
+jobs:
+  preview:
+    name: Deploy gs-web preview
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build gs-web
+        run: npm run build -w @goldshore/web
+
+      - name: Deploy preview to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          PREVIEW_BRANCH: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.ref_name }}
+        run: |
+          npx wrangler pages deploy apps/goldshore-web/dist \
+            --project-name gs-web \
+            --branch "${PREVIEW_BRANCH}"
