@@ -1,6 +1,23 @@
 # Merge-Conflict Follow-up: PR Head vs Base
 
 ## Summary
+- Re-ran the branch comparison workflow to verify whether `work` diverges from `main` in a way that would cause merge conflicts.
+- The tip commit on `work` (`b59f6aa`) is metadata-only (same tree as its parent), so there are no file-level conflicts to resolve.
+- The branch can be merged by replaying the same tree state on a non-default branch, which avoids the default-branch push restriction noted in PR automation.
+
+## Commands Executed
+1. Verify the current branch and recent history:
+   ```bash
+   git status --short --branch
+   git log --oneline --decorate -n 5
+   ```
+2. Confirm whether the latest commit changes repository contents:
+   ```bash
+   git rev-parse HEAD^{tree} HEAD~1^{tree}
+   ```
+3. Check for unresolved conflict markers in the working tree:
+   ```bash
+   rg -n "^(<<<<<<<|=======|>>>>>>>)" .
 - Attempted to reproduce the pull request merge locally using the provided refs:
   - Base: `8f2cf450b2f9aada260e968a5fc9f7419c3c5de1`
   - Head: `4fd436bdecd4c001a8be13c1cc8973833892f4eb`
