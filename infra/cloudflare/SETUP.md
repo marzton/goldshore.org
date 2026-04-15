@@ -31,7 +31,51 @@ The `infra/cloudflare/provision.sh` script will programmatically create the nece
 bash infra/cloudflare/provision.sh
 ```
 
-## 5. Configure DNS
+
+## 5. Configure API Worker environments
+
+`apps/goldshore-api/wrangler.toml` now requires environment-variable interpolation for all per-environment Cloudflare bindings.
+
+Before running `wrangler deploy`, export the following variables (or provide them via your CI secret store):
+
+### Dev (`--env dev`)
+
+- `D1_DATABASE_ID_DEV`
+- `R2_BUCKET_NAME_DEV`
+- `KV_NAMESPACE_ID_DEV`
+- `QUEUE_NAME_DEV`
+
+### Preview (`--env preview`)
+
+- `D1_DATABASE_ID_PREVIEW`
+- `R2_BUCKET_NAME_PREVIEW`
+- `KV_NAMESPACE_ID_PREVIEW`
+- `QUEUE_NAME_PREVIEW`
+
+### Production (`--env prod`)
+
+- `D1_DATABASE_ID_PROD`
+- `R2_BUCKET_NAME_PROD`
+- `KV_NAMESPACE_ID_PROD`
+- `QUEUE_NAME_PROD`
+
+The API worker also declares the non-secret runtime var `CF_TEAM_DOMAIN` in `wrangler.toml`.
+
+Validate variables are populated before deploy:
+
+```bash
+: "${D1_DATABASE_ID_DEV:?}" "${R2_BUCKET_NAME_DEV:?}" "${KV_NAMESPACE_ID_DEV:?}" "${QUEUE_NAME_DEV:?}"
+: "${D1_DATABASE_ID_PREVIEW:?}" "${R2_BUCKET_NAME_PREVIEW:?}" "${KV_NAMESPACE_ID_PREVIEW:?}" "${QUEUE_NAME_PREVIEW:?}"
+: "${D1_DATABASE_ID_PROD:?}" "${R2_BUCKET_NAME_PROD:?}" "${KV_NAMESPACE_ID_PROD:?}" "${QUEUE_NAME_PROD:?}"
+```
+
+Route behavior configured in `wrangler.toml`:
+
+- `dev` -> `api-dev.goldshore.org/*` (`workers_dev = true`)
+- `preview` -> `api-preview.goldshore.org/*` (`workers_dev = true`)
+- `prod` -> `api.goldshore.org/*` (`workers_dev = false`)
+
+## 6. Configure DNS
 
 Ensure that you have the following DNS records configured in your Cloudflare zone:
 

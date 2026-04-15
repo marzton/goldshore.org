@@ -15,7 +15,11 @@
     "deploy": "turbo run deploy",
     "dev:api": "wrangler dev --config apps/goldshore-api/wrangler.toml",
     "build:api": "wrangler build --config apps/goldshore-api/wrangler.toml",
-    "deploy:api": "wrangler deploy --config apps/goldshore-api/wrangler.toml"
+    "deploy:api": "wrangler deploy --config apps/goldshore-api/wrangler.toml",
+    "deploy:prod": "wrangler deploy --config wrangler.toml --env production",
+    "deploy:preview": "wrangler deploy --config wrangler.toml --env preview",
+    "deploy:dev": "wrangler deploy --config wrangler.toml --env development",
+    "dev:router": "wrangler dev --config wrangler.toml --env development"
   },
   "devDependencies": {
     "eslint": "^9.39.1",
