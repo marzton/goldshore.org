@@ -33,7 +33,7 @@ CF_ACCESS_JWKS_URL = "https://rmarston.cloudflareaccess.com/cdn-cgi/access/certs
 [[env.production.services]]
 binding = "API"
 service = "goldshore-api"
-environment = "production"
+environment = "prod"
 
 [[env.production.analytics_engine_datasets]]
 binding = "WEB_ANALYTICS"
@@ -61,4 +61,4 @@ ASSETS_ORIGIN = "https://goldshore-org-dev.pages.dev"
 [[env.development.services]]
 binding = "API"
 service = "goldshore-api"
-environment = "development"
+environment = "dev"
