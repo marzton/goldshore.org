@@ -1,15 +1,31 @@
-# Branch Comparison: work vs. main
+# Merge-Conflict Follow-up: PR Head vs Base
 
 ## Summary
-- Compared the current working branch `work` against the up-to-date remote branch `origin/main` after fetching it locally.
-- No differences were detected; the branches are in sync and would merge without conflicts.
+- Attempted to reproduce the pull request merge locally using the provided refs:
+  - Base: `8f2cf450b2f9aada260e968a5fc9f7419c3c5de1`
+  - Head: `4fd436bdecd4c001a8be13c1cc8973833892f4eb`
+- The head commit is present in this checkout and matches the current `work` branch tip.
+- The base commit is not available in this local clone, so a direct `git merge` simulation cannot be executed in this environment.
+- Verified that the current tree is clean and contains no conflict markers, which keeps a follow-up PR branch safe to review and merge once the base commit is available in CI/GitHub context.
 
-## Commands Executed
-1. Fetch the latest `main` branch from the remote to ensure the comparison uses the newest commit history:
+## Reproducible Check Commands
+1. Validate the PR head commit exists locally:
    ```bash
-   git fetch origin main
+   git cat-file -t 4fd436bdecd4c001a8be13c1cc8973833892f4eb
    ```
-2. Diff the remote `main` against the local `work` branch to confirm no changes are pending:
+2. Validate whether the PR base commit is available locally:
    ```bash
-   git diff --stat origin/main..work
+   git cat-file -t 8f2cf450b2f9aada260e968a5fc9f7419c3c5de1
    ```
+3. Confirm branch status and active tip:
+   ```bash
+   git status --short --branch
+   git log --oneline --decorate -n 3
+   ```
+4. Confirm no merge conflict markers exist in tracked files:
+   ```bash
+   rg -n "^(<<<<<<<|=======|>>>>>>>)" . || true
+   ```
+
+## Operational Note
+If GitHub still reports a merge conflict for this PR, create a follow-up branch from the latest base branch in the remote context and replay the head tree there (or cherry-pick the relevant commit set), then open a new PR for merge.
