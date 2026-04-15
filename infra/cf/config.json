@@ -35,24 +35,6 @@
         "preview",
         "develop"
       ],
-      "custom_domains": [
-        {
-          "hostname": "goldshore.org",
-          "environment": "production"
-        },
-        {
-          "hostname": "www.goldshore.org",
-          "environment": "production"
-        },
-        {
-          "hostname": "preview.goldshore.org",
-          "environment": "preview"
-        },
-        {
-          "hostname": "dev.goldshore.org",
-          "environment": "development"
-        }
-      ],
       "deployment_configs": {
         "production": {
           "compatibility_date": "2024-02-19",
@@ -74,20 +56,6 @@
       "production_branch": "main",
       "preview_branches": [
         "admin-preview"
-      ],
-      "custom_domains": [
-        {
-          "hostname": "admin.goldshore.org",
-          "environment": "production"
-        },
-        {
-          "hostname": "admin-preview.goldshore.org",
-          "environment": "preview"
-        },
-        {
-          "hostname": "admin-dev.goldshore.org",
-          "environment": "development"
-        }
       ],
       "source": {
         "type": "github",
