@@ -23,11 +23,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Validate Worker Build
-        run: npm run build:api
+        run: pnpm run build:api
 
       - name: Deploy goldshore-api
         run: npx wrangler deploy --config apps/goldshore-api/wrangler.toml

@@ -9,8 +9,8 @@ AUTH_HEADER="Authorization: Bearer ${CF_API_TOKEN}"
 CONTENT_TYPE_HEADER="Content-Type: application/json"
 
 WEB_PROD_TARGET=${WEB_PROD_TARGET:-"goldshore-org.pages.dev"}
-WEB_PREVIEW_TARGET=${WEB_PREVIEW_TARGET:-"goldshore-org-preview.pages.dev"}
-WEB_DEV_TARGET=${WEB_DEV_TARGET:-"goldshore-org-dev.pages.dev"}
+WEB_PREVIEW_TARGET=${WEB_PREVIEW_TARGET:-"preview.goldshore-org.pages.dev"}
+WEB_DEV_TARGET=${WEB_DEV_TARGET:-"dev.goldshore-org.pages.dev"}
 API_WORKER=${API_WORKER:-"goldshore-api"}
 WORKERS_SUBDOMAIN=${WORKERS_SUBDOMAIN:-"goldshore"}
 API_TARGET="${API_WORKER}.${WORKERS_SUBDOMAIN}.workers.dev"

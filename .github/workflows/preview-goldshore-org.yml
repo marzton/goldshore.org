@@ -4,7 +4,7 @@ on:
   pull_request:
     paths:
       - "apps/goldshore-web/**"
-      - ".github/workflows/preview-gs-web.yml"
+      - ".github/workflows/preview-goldshore-org.yml"
   workflow_dispatch:
 
 jobs:
@@ -21,11 +21,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build goldshore-org
-        run: npm run build -w @goldshore/web
+        run: pnpm run build -w @goldshore/web
 
       - name: Deploy preview to Cloudflare Pages
         env:
