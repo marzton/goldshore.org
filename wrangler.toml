@@ -1,6 +1,6 @@
 # Cloudflare Worker router for goldshore.org. The marketing site lives on
 # Cloudflare Pages while this Worker owns the custom domains and GPT proxy.
-name = "goldshore-web-router"
+name = "goldshore-org"
 main = "src/router.js"
 compatibility_date = "2025-10-05"
 

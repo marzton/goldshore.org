@@ -1,5 +1,5 @@
 {
-  "script": "goldshore-web-router",
+  "script": "goldshore-org",
   "description": "Edge router delivering the public marketing site and shared assets for goldshore.org.",
   "compatibility_date": "2025-10-05",
   "environments": {
@@ -10,9 +10,9 @@
       ],
       "vars": {
         "APP_NAME": "Goldshore Web Router",
-        "PRODUCTION_ASSETS": "https://goldshore-web.pages.dev",
-        "PREVIEW_ASSETS": "https://preview.goldshore-web.pages.dev",
-        "DEV_ASSETS": "https://dev.goldshore-web.pages.dev"
+        "PRODUCTION_ASSETS": "https://goldshore-org.pages.dev",
+        "PREVIEW_ASSETS": "https://preview.goldshore-org.pages.dev",
+        "DEV_ASSETS": "https://dev.goldshore-org.pages.dev"
       },
       "services": [
         {
@@ -34,9 +34,9 @@
       ],
       "vars": {
         "APP_NAME": "Goldshore Preview Router",
-        "PRODUCTION_ASSETS": "https://goldshore-web.pages.dev",
-        "PREVIEW_ASSETS": "https://preview.goldshore-web.pages.dev",
-        "DEV_ASSETS": "https://dev.goldshore-web.pages.dev"
+        "PRODUCTION_ASSETS": "https://goldshore-org.pages.dev",
+        "PREVIEW_ASSETS": "https://preview.goldshore-org.pages.dev",
+        "DEV_ASSETS": "https://dev.goldshore-org.pages.dev"
       ],
       "services": [
         {
@@ -52,9 +52,9 @@
       ],
       "vars": {
         "APP_NAME": "Goldshore Dev Router",
-        "PRODUCTION_ASSETS": "https://goldshore-web.pages.dev",
-        "PREVIEW_ASSETS": "https://preview.goldshore-web.pages.dev",
-        "DEV_ASSETS": "https://dev.goldshore-web.pages.dev"
+        "PRODUCTION_ASSETS": "https://goldshore-org.pages.dev",
+        "PREVIEW_ASSETS": "https://preview.goldshore-org.pages.dev",
+        "DEV_ASSETS": "https://dev.goldshore-org.pages.dev"
       ],
       "services": [
         {

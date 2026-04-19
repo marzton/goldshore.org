@@ -1,4 +1,4 @@
-name: Preview deploy gs-web
+name: Preview deploy goldshore-org
 
 on:
   pull_request:
@@ -9,7 +9,7 @@ on:
 
 jobs:
   preview:
-    name: Deploy gs-web preview
+    name: Deploy goldshore-org preview
     runs-on: ubuntu-latest
 
     steps:
@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Build gs-web
+      - name: Build goldshore-org
         run: npm run build -w @goldshore/web
 
       - name: Deploy preview to Cloudflare Pages
@@ -34,5 +34,5 @@ jobs:
           PREVIEW_BRANCH: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.ref_name }}
         run: |
           npx wrangler pages deploy apps/goldshore-web/dist \
-            --project-name gs-web \
+            --project-name goldshore-org \
             --branch "${PREVIEW_BRANCH}"
