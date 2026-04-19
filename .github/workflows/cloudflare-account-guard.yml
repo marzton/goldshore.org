@@ -1,0 +1,108 @@
+name: Cloudflare Account Guard
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify-cloudflare-account:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Ensure guard config exists
+        run: test -f ops/cloudflare-account-required.json
+
+      - name: Verify Cloudflare credentials are present
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" || (echo "Missing CLOUDFLARE_API_TOKEN" && exit 1)
+          test -n "$CLOUDFLARE_ACCOUNT_ID" || (echo "Missing CLOUDFLARE_ACCOUNT_ID" && exit 1)
+
+      - name: Validate required account resources
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import urllib.parse
+          import urllib.request
+
+          ACCOUNT_ID = os.environ["CLOUDFLARE_ACCOUNT_ID"]
+          TOKEN = os.environ["CLOUDFLARE_API_TOKEN"]
+
+          with open("ops/cloudflare-account-required.json", "r", encoding="utf-8") as fh:
+              cfg = json.load(fh)
+
+          def api_get(url: str):
+              req = urllib.request.Request(
+                  url,
+                  headers={
+                      "Authorization": f"Bearer {TOKEN}",
+                      "Content-Type": "application/json",
+                  },
+              )
+              with urllib.request.urlopen(req) as resp:
+                  payload = json.loads(resp.read().decode())
+
+              if not payload.get("success"):
+                  raise SystemExit(f"Cloudflare API error for {url}: {payload}")
+              return payload
+
+          def list_all(url: str):
+              items = []
+              page = 1
+              while True:
+                  joiner = "&" if "?" in url else "?"
+                  payload = api_get(f"{url}{joiner}page={page}&per_page=100")
+                  result = payload.get("result", [])
+                  if isinstance(result, dict):
+                      result = [result]
+                  items.extend(result)
+
+                  info = payload.get("result_info") or {}
+                  total_pages = info.get("total_pages")
+                  if not total_pages:
+                      break
+                  if page >= total_pages:
+                      break
+                  page += 1
+              return items
+
+          kv_namespaces = {item.get("title") for item in list_all(f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/storage/kv/namespaces")}
+          d1_databases = {item.get("name") for item in list_all(f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/d1/database")}
+          r2_buckets = {item.get("name") for item in list_all(f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/r2/buckets")}
+          queues = {item.get("queue_name") for item in list_all(f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/queues")}
+          pages_projects = {item.get("name") for item in list_all(f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/pages/projects")}
+
+          def ensure_required(found, required, label):
+              missing = [name for name in required if name not in found]
+              if missing:
+                  raise SystemExit(f"Missing required {label}: {', '.join(missing)}")
+
+          ensure_required(kv_namespaces, cfg.get("required_kv_namespaces", []), "KV namespaces")
+          ensure_required(d1_databases, cfg.get("required_d1_databases", []), "D1 databases")
+          ensure_required(r2_buckets, cfg.get("required_r2_buckets", []), "R2 buckets")
+          ensure_required(queues, cfg.get("required_queues", []), "Queues")
+          ensure_required(pages_projects, cfg.get("required_pages_projects", []), "Pages projects")
+
+          required_pages_domains = cfg.get("required_pages_domains", {})
+          for project_name, required_domains in required_pages_domains.items():
+              encoded_project = urllib.parse.quote(project_name, safe="")
+              domain_rows = list_all(
+                  f"https://api.cloudflare.com/client/v4/accounts/{ACCOUNT_ID}/pages/projects/{encoded_project}/domains"
+              )
+              found_domains = {row.get("name") for row in domain_rows}
+              missing_domains = [d for d in required_domains if d not in found_domains]
+              if missing_domains:
+                  raise SystemExit(
+                      f"Missing required Pages domains for {project_name}: {', '.join(missing_domains)}"
+                  )
+
+          print("Cloudflare account guard passed.")
+          PY
