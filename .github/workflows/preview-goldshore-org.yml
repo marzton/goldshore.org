@@ -28,7 +28,7 @@ jobs:
         run: pnpm install
 
       - name: Build goldshore-org
-        run: pnpm run build -w @goldshore/web
+        run: pnpm --filter @goldshore/web build
 
       - name: Deploy preview to Cloudflare Pages
         env:
