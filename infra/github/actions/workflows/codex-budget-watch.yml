@@ -15,9 +15,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-          cache: "npm"
+      - uses: pnpm/action-setup@v4
       - name: Install dependencies
-        run: npm install --no-audit --no-fund
+        run: pnpm install
       - name: Validate limiter config
         run: npx tsx infra/limits/validate_codex_config.ts
       - name: Run Codex limiter
