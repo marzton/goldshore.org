@@ -30,6 +30,7 @@
   "pages_projects": [
     {
       "name": "goldshore-web",
+      "notes": "Domain mapping is managed via DNS records; keep Pages custom_domains unset to avoid conflicts.",
       "production_branch": "main",
       "preview_branches": [
         "preview",
@@ -53,6 +54,7 @@
     },
     {
       "name": "goldshore-admin",
+      "notes": "Domain mapping is managed via DNS records; keep Pages custom_domains unset to avoid conflicts.",
       "production_branch": "main",
       "preview_branches": [
         "admin-preview"
