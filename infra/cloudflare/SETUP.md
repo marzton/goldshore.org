@@ -6,8 +6,26 @@ This guide outlines the one-time manual steps required to set up the GoldShore p
 
 - A Cloudflare account with an active zone for your domain (e.g., `goldshore.org`).
 - The `wrangler` CLI installed and authenticated.
+- GitHub repository secrets configured for Pages deploys:
+  - `CLOUDFLARE_API_TOKEN`
+  - `CLOUDFLARE_ACCOUNT_ID`
+  - `CLOUDFLARE_PAGES_PROJECT_NAME` (for example `goldshore-org`)
 
-## 2. Create Cloudflare Pages Projects
+## 2. GitHub Actions Pages deployment flow
+
+The workflow `.github/workflows/pages-web-deploy.yml` (mirrored to `infra/github/actions/workflows/pages-web-deploy.yml`) performs:
+
+1. Repository checkout and dependency install (`pnpm install`).
+2. Web build (`pnpm --filter @goldshore/web build`).
+3. Pages deploy of `apps/goldshore-web/dist` via `wrangler pages deploy`.
+
+Branch/environment alignment is enforced in workflow logic:
+
+- `main` -> production -> `goldshore.org`
+- `preview` -> preview -> `preview.goldshore.org`
+- `dev` -> development -> `dev.goldshore.org`
+
+## 3. Create Cloudflare Pages Projects
 
 You will need to create two Cloudflare Pages projects, one for the web application and one for the admin dashboard.
 
