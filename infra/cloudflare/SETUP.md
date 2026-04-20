@@ -13,6 +13,8 @@ You will need to create two Cloudflare Pages projects, one for the web applicati
 
 ### `goldshore-web`
 
+Canonical source directory for Astro files: `apps/goldshore-web/src` (single source of truth).
+
 1.  Navigate to **Workers & Pages** > **Create application** > **Pages** > **Connect to Git**.
 2.  Select your GitHub repository.
 3.  In the **Build settings**, select the following:
