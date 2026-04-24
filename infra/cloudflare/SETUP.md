@@ -58,7 +58,7 @@ bash infra/cloudflare/provision.sh
 
 Before running `wrangler deploy`, export the following variables (or provide them via your CI secret store):
 
-### Dev (`--env dev`)
+### Dev (`--env development`)
 
 - `D1_DATABASE_ID_DEV`
 - `R2_BUCKET_NAME_DEV`
@@ -72,7 +72,7 @@ Before running `wrangler deploy`, export the following variables (or provide the
 - `KV_NAMESPACE_ID_PREVIEW`
 - `QUEUE_NAME_PREVIEW`
 
-### Production (`--env prod`)
+### Production (`--env production`)
 
 - `D1_DATABASE_ID_PROD`
 - `R2_BUCKET_NAME_PROD`
@@ -91,9 +91,9 @@ Validate variables are populated before deploy:
 
 Route behavior configured in `wrangler.toml`:
 
-- `dev` -> `api-dev.goldshore.org/*` (`workers_dev = true`)
+- `development` -> `api-dev.goldshore.org/*` (`workers_dev = true`)
 - `preview` -> `api-preview.goldshore.org/*` (`workers_dev = true`)
-- `prod` -> `api.goldshore.org/*` (`workers_dev = false`)
+- `production` -> `api.goldshore.org/*` (`workers_dev = false`)
 
 ## 6. Configure DNS
 
