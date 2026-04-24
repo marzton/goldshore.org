@@ -10,8 +10,12 @@ HOSTS=(
 echo "== HTTP health checks =="
 for url in "${HOSTS[@]}"; do
   echo "-- $url"
-  if ! curl -sS -I --max-time 15 "$url" | head -n 1; then
+  headers="$(curl -sS -I --max-time 15 "$url")"
+  curl_status=$?
+  if [ "$curl_status" -ne 0 ]; then
     echo "WARN: HTTP check failed for $url"
+  else
+    printf "%s\n" "$headers" | head -n 1
   fi
   echo
  done
