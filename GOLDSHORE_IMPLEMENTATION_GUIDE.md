@@ -39,10 +39,11 @@ The GoldShore repository is a monorepo built with npm workspaces. It contains th
 
 ### 3.2. Build and Release Pipeline
 
--   The CI/CD pipeline is defined in `.github/workflows/ci.yml`.
+-   The CI/CD pipeline is defined in `.github/workflows/`.
 -   When changes are pushed to the `main` branch, the pipeline automatically builds and deploys the applications to Cloudflare.
--   The `web` application is deployed to Cloudflare Pages.
--   The `api-worker` is deployed to Cloudflare Workers.
+-   The `web` application is deployed to Cloudflare Pages as `goldshore-org`.
+-   The edge router worker is deployed as `goldshore-org`.
+-   The `api-worker` is deployed to Cloudflare Workers as `goldshore-api`.
 
 ### 3.3. Security and Observability
 

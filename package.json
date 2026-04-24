@@ -19,7 +19,10 @@
     "deploy:prod": "wrangler deploy --config wrangler.toml --env production",
     "deploy:preview": "wrangler deploy --config wrangler.toml --env preview",
     "deploy:dev": "wrangler deploy --config wrangler.toml --env development",
-    "dev:router": "wrangler dev --config wrangler.toml --env development"
+    "dev:router": "wrangler dev --config wrangler.toml --env development",
+    "audit:cloudflare:github": "bash scripts/audit-cloudflare-github.sh",
+    "check:artifact-hygiene": "bash scripts/prevent-conflict-artifacts.sh",
+    "sync:gs-org": "bash scripts/sync-gs-org-content.sh"
   },
   "devDependencies": {
     "eslint": "^9.39.1",
