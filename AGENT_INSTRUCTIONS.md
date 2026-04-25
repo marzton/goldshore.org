@@ -5,7 +5,16 @@
 - API: `apps/goldshore-api` (Cloudflare Worker, Hono)
 - Marketing Site: `apps/goldshore-web` (Astro)
 - AI Gateway: `apps/goldshore-agent`
-- Shared types: `packages/schema`
+- Core Domains:
+  - Canonical Schemas: `packages/schema`
+  - Rules Engine: `packages/rules`
+  - Analytics Engine: `packages/analytics`
+  - Execution Planner: `packages/execution`
+  - Research Store: `packages/research`
+- Broker Adapters:
+  - thinkorswim: `packages/broker-tos`
+  - Fidelity: `packages/broker-fidelity`
+  - Robinhood: `packages/broker-robinhood`
 - Shared UI: `packages/ui`
 - Infra: `infra/` Terraform (Cloudflare Pages + Workers + DNS + Access)
 

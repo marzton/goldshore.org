@@ -1,4 +1,4 @@
-# NOTE: Mirrored from infra/github/actions/workflows/validate-codex.yml
+# Canonical workflow location: .github/workflows/
 name: Validate Codex access
 
 on:

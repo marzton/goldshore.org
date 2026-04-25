@@ -1,5 +1,5 @@
-# NOTE: Mirrored from infra/github/actions/workflows/cf-deploy.yml
-name: Deploy goldshore-api
+# Canonical workflow location: .github/workflows/
+name: Deploy goldshore-org
 on:
   push:
     branches: [ "main" ]
@@ -8,6 +8,7 @@ on:
 
 jobs:
   preflight:
+    name: Preflight for goldshore-org
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,6 +24,7 @@ jobs:
         run: bash .github/scripts/codex_preflight.sh
 
   deploy:
+    name: Deploy goldshore-org
     needs: preflight
     runs-on: ubuntu-latest
     steps:
@@ -37,12 +39,12 @@ jobs:
           GITHUB_PRIVATE_KEY: ${{ secrets.GITHUB_PRIVATE_KEY }}
           GITHUB_WEBHOOK_SECRET: ${{ secrets.GITHUB_WEBHOOK_SECRET }}
         run: |
-          echo "${CODEX_JWT_HS256_KEY}" | wrangler secret put CODEX_JWT_HS256_KEY --quiet || true
-          echo "${GITHUB_CLIENT_SECRET}" | wrangler secret put GITHUB_CLIENT_SECRET --quiet || true
-          echo "${GITHUB_PRIVATE_KEY}" | wrangler secret put GITHUB_PRIVATE_KEY --quiet || true
-          echo "${GITHUB_WEBHOOK_SECRET}" | wrangler secret put GITHUB_WEBHOOK_SECRET --quiet || true
-      - name: Deploy Worker
+          echo "${CODEX_JWT_HS256_KEY}" | wrangler secret put CODEX_JWT_HS256_KEY --config wrangler.toml --quiet || true
+          echo "${GITHUB_CLIENT_SECRET}" | wrangler secret put GITHUB_CLIENT_SECRET --config wrangler.toml --quiet || true
+          echo "${GITHUB_PRIVATE_KEY}" | wrangler secret put GITHUB_PRIVATE_KEY --config wrangler.toml --quiet || true
+          echo "${GITHUB_WEBHOOK_SECRET}" | wrangler secret put GITHUB_WEBHOOK_SECRET --config wrangler.toml --quiet || true
+      - name: Deploy goldshore-org
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-        run: wrangler deploy --minify
+        run: wrangler deploy --config wrangler.toml --minify
