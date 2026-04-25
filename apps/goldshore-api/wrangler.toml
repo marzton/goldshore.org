@@ -6,26 +6,26 @@ workers_dev = true
 [vars]
 CF_TEAM_DOMAIN = "goldshore"
 
-[env.development]
+[env.dev]
 workers_dev = true
 routes = [
   { pattern = "api-dev.goldshore.org/*", zone_name = "goldshore.org" }
 ]
 
-[[env.development.d1_databases]]
+[[env.dev.d1_databases]]
 binding = "DB"
 database_name = "goldshore-cms-dev"
 database_id = "${D1_DATABASE_ID_DEV}"
 
-[[env.development.r2_buckets]]
+[[env.dev.r2_buckets]]
 binding = "ASSETS"
 bucket_name = "${R2_BUCKET_NAME_DEV}"
 
-[[env.development.kv_namespaces]]
+[[env.dev.kv_namespaces]]
 binding = "SITE_KV"
 id = "${KV_NAMESPACE_ID_DEV}"
 
-[[env.development.queues]]
+[[env.dev.queues]]
 binding = "JOBS"
 queue_name = "${QUEUE_NAME_DEV}"
 
@@ -52,25 +52,25 @@ id = "${KV_NAMESPACE_ID_PREVIEW}"
 binding = "JOBS"
 queue_name = "${QUEUE_NAME_PREVIEW}"
 
-[env.production]
+[env.prod]
 workers_dev = false
 routes = [
   { pattern = "api.goldshore.org/*", zone_name = "goldshore.org" }
 ]
 
-[[env.production.d1_databases]]
+[[env.prod.d1_databases]]
 binding = "DB"
 database_name = "goldshore-cms"
 database_id = "${D1_DATABASE_ID_PROD}"
 
-[[env.production.r2_buckets]]
+[[env.prod.r2_buckets]]
 binding = "ASSETS"
 bucket_name = "${R2_BUCKET_NAME_PROD}"
 
-[[env.production.kv_namespaces]]
+[[env.prod.kv_namespaces]]
 binding = "SITE_KV"
 id = "${KV_NAMESPACE_ID_PROD}"
 
-[[env.production.queues]]
+[[env.prod.queues]]
 binding = "JOBS"
 queue_name = "${QUEUE_NAME_PROD}"

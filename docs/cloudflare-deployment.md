@@ -4,7 +4,7 @@ This project can run as a static site (GitHub Pages, Cloudflare Pages, or any CD
 
 ## 1. Static origin
 
-1. Build the site from `main` and publish it to your preferred static host. For Cloudflare Pages, set the project to deploy from this repository and use `apps/goldshore-web/src` as the canonical Astro source tree (no `apps/goldshore-web/web/src` fallback).
+1. Build the site from `main` and publish it to your preferred static host. For Cloudflare Pages, set the project to deploy from this repository.
 2. Note the origin hostnames that Cloudflare assigns:
    - **Production** – e.g. `goldshore-org.pages.dev`
    - **Preview** – e.g. `<branch>.goldshore-org.pages.dev`
