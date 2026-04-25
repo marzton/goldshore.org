@@ -24,7 +24,7 @@
       "analytics_engine_datasets": [
         {
           "binding": "WEB_ANALYTICS",
-          "dataset": "goldshore-web-events"
+          "dataset": "goldshore-org-events"
         }
       ]
     },
