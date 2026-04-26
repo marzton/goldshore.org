@@ -15,18 +15,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install Dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build Site
-        run: npm run build -w @goldshore/web
+        run: pnpm --filter @goldshore/web build
 
       - name: Validate Output Directory
         run: |

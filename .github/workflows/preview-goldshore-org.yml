@@ -1,38 +1,34 @@
-name: Preview deploy gs-admin
+name: Preview deploy goldshore-org
 
 on:
   pull_request:
     paths:
-      - "apps/gs-admin/**"
-      - ".github/workflows/preview-gs-admin.yml"
+      - "apps/goldshore-web/**"
+      - ".github/workflows/preview-goldshore-org.yml"
   workflow_dispatch:
 
 jobs:
   preview:
-    name: Deploy gs-admin preview
+    name: Deploy goldshore-org preview
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate gs-admin app path
-        run: |
-          if [ ! -d "apps/gs-admin" ]; then
-            echo "::error::Expected app path apps/gs-admin was not found in this branch."
-            exit 1
-          fi
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
-      - name: Build gs-admin
-        run: npm run build --workspace apps/gs-admin
+      - name: Build goldshore-org
+        run: pnpm --filter @goldshore/web build
 
       - name: Deploy preview to Cloudflare Pages
         env:
@@ -40,6 +36,6 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           PREVIEW_BRANCH: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.ref_name }}
         run: |
-          npx wrangler pages deploy apps/gs-admin/dist \
-            --project-name gs-admin \
+          npx wrangler pages deploy apps/goldshore-web/dist \
+            --project-name goldshore-org \
             --branch "${PREVIEW_BRANCH}"
