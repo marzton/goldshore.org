@@ -1,30 +1,677 @@
 ---
-import Base from "../layouts/Base.astro";
+// GoldShore v3 — THE SYNTHESIS
+import "../styles/v3.css";
 ---
-<Base>
-  <main class="mx-auto max-w-6xl p-6">
-    <section class="py-12">
-      <h1 class="font-display text-4xl">GoldShore — trading infrastructure & insights</h1>
-      <div class="mt-4 flex gap-3">
-        <a href="/dash" class="px-4 py-2 rounded bg-[var(--brand)] text-[var(--brand-contrast)]">Launch Dashboard</a>
-        <a href="https://api.goldshore.org/v1/docs" class="px-4 py-2 rounded border border-[var(--border)]">View API Docs</a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GoldShore — Applied Intelligence for Institutional Operations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- Parallax layers -->
+<div class="parallax-deep" id="pDeep"></div>
+<div class="parallax-mid"  id="pMid"></div>
+
+<!-- Starfield -->
+<canvas id="starfield"></canvas>
+
+<!-- Corner brackets -->
+<div class="corner-tl"></div>
+<div class="corner-tr"></div>
+<div class="corner-bl"></div>
+<div class="corner-br"></div>
+
+<!-- Coordinates HUD -->
+<div class="coords-hud">
+  <span id="coordLat">40°42′46″N</span>
+  <span id="coordLng">074°00′21″W</span>
+  <span id="coordSec">GS·LAB·v2.4.1</span>
+</div>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="nav-wordmark">Gold<span class="outlined">Shore</span></span>
+    <span class="nav-sub">Applied Intelligence · Digital Systems · Consulting</span>
+  </a>
+
+  <ul class="nav-links">
+    <li class="has-sub">
+      <button>Platform</button>
+      <div class="dropdown">
+        <a href="#">Risk Radar <span class="dd-badge live">Live</span></a>
+        <a href="#">Financial Signals <span class="dd-badge live">Live</span></a>
+        <a href="#">Workflow Engine <span class="dd-badge live">Live</span></a>
+        <a href="#">Sentiment Engine <span class="dd-badge beta">Beta</span></a>
+        <a href="#">AI Oracle <span class="dd-badge soon">Soon</span></a>
       </div>
-    </section>
-    <section id="products" class="grid md:grid-cols-3 gap-4 py-8">
-      <a class="p-4 border rounded" href="https://api.goldshore.org/v1/health">Trading API</a>
-      <a class="p-4 border rounded" href="https://api.goldshore.org/v1/risk/limits">Options & Risk</a>
-      <a class="p-4 border rounded" href="https://admin.goldshore.org">Admin & CRM</a>
-    </section>
-    <section id="pricing" class="grid md:grid-cols-3 gap-4 py-8">
-      <a class="p-4 border rounded" href="/signup?plan=free">Free</a>
-      <a class="p-4 border rounded" href="/signup?plan=pro">Pro</a>
-      <a class="p-4 border rounded" href="/signup?plan=enterprise">Enterprise</a>
-    </section>
-    <section id="contact" class="py-8">
-      <form method="post" action="https://api.goldshore.org/v1/lead" class="flex gap-2">
-        <input name="email" type="email" required placeholder="you@company.com" class="border p-2 rounded flex-1" />
-        <button class="px-4 py-2 rounded bg-[var(--brand)] text-[var(--brand-contrast)]" type="submit">Request Access</button>
+    </li>
+    <li class="has-sub">
+      <button>Services</button>
+      <div class="dropdown">
+        <a href="#">Digital Strategy</a>
+        <a href="#">AI Implementation</a>
+        <a href="#">Systems Integration</a>
+        <a href="#">Design & Development</a>
+        <a href="#">Enterprise Consulting</a>
+      </div>
+    </li>
+    <li class="has-sub">
+      <button>Sectors</button>
+      <div class="dropdown">
+        <a href="#">Financial Services</a>
+        <a href="#">Operations & Logistics</a>
+        <a href="#">Media & Communications</a>
+        <a href="#">Healthcare Systems</a>
+        <a href="#">Public Sector</a>
+      </div>
+    </li>
+    <li><a href="#">Developer</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+
+  <div class="nav-actions">
+    <div class="nav-status">
+      <span class="pip"></span>Operational
+    </div>
+    <a href="#" class="btn-ghost">Log in</a>
+    <a href="#" class="btn-primary" onclick="openModal();return false;">
+      Request Briefing
+      <svg width="9" height="9" viewBox="0 0 9 9" fill="none"><path d="M1 4.5h7M4.5 1l3.5 3.5L4.5 8" stroke="currentColor" stroke-width="1.2"/></svg>
+    </a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="orbital orbital-1"></div>
+  <div class="orbital orbital-2"></div>
+  <div class="orbital orbital-3"></div>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">Gold Shore Labs · Est. 2022 · New York</div>
+
+    <h1>
+      <span class="solid">Where</span>
+      <span class="outlined">Strategy</span>
+      <span class="accent" data-text="Operates.">Operates.</span>
+    </h1>
+
+    <p class="hero-body">
+      Applied intelligence for institutions that need clarity under pressure. We build the software, run the strategy, and deploy the AI — cross-sector, full-stack, end to end.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#" class="btn-hero-primary" onclick="openModal();return false;">
+        Request Briefing
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1 5h8M5 1l4 4-4 4" stroke="currentColor" stroke-width="1.2"/></svg>
+      </a>
+      <a href="#platform" class="btn-hero-secondary">
+        View Platform
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M5 1v8M1 5l4 4 4-4" stroke="currentColor" stroke-width="1.2"/></svg>
+      </a>
+      <a href="#developer" class="btn-hero-secondary">Developer Hub →</a>
+    </div>
+
+    <div class="hero-telem">
+      <div class="telem-cell">
+        <div class="tl">Uptime</div>
+        <div class="tv">99.98<span style="font-size:0.6em">%</span></div>
+        <div class="tu">30-day avg</div>
+      </div>
+      <div class="telem-cell">
+        <div class="tl">Signal Events</div>
+        <div class="tv">4.8<span style="font-size:0.6em">B</span></div>
+        <div class="tu">Per month</div>
+      </div>
+      <div class="telem-cell">
+        <div class="tl">Latency P99</div>
+        <div class="tv">&lt;45<span style="font-size:0.6em">ms</span></div>
+        <div class="tu">Gateway</div>
+      </div>
+      <div class="telem-cell">
+        <div class="tl">Deploys</div>
+        <div class="tv">48<span style="font-size:0.6em">/d</span></div>
+        <div class="tu">Verified</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="sector-matrix">
+      <div class="sm-header">
+        <span class="sm-title">Cross-Sector Deployment Surface</span>
+        <span class="sm-count">5 active sectors</span>
+      </div>
+      <div class="sm-grid">
+        <div class="sm-cell">
+          <div class="sm-cell-name">Financial Services</div>
+          <div class="sm-cell-tag">Risk · Signals · Trading</div>
+        </div>
+        <div class="sm-cell">
+          <div class="sm-cell-name">Operations & Logistics</div>
+          <div class="sm-cell-tag">Workflow · Automation</div>
+        </div>
+        <div class="sm-cell">
+          <div class="sm-cell-name">Media & Comms</div>
+          <div class="sm-cell-tag">Content · Analytics</div>
+        </div>
+        <div class="sm-cell">
+          <div class="sm-cell-name">Healthcare Systems</div>
+          <div class="sm-cell-tag">Compliance · AI</div>
+        </div>
+        <div class="sm-cell">
+          <div class="sm-cell-name">Public Sector</div>
+          <div class="sm-cell-tag">Gov · Infrastructure</div>
+        </div>
+        <div class="sm-cell">
+          <div class="sm-cell-name">Enterprise Tech</div>
+          <div class="sm-cell-tag">Dev · Design · Systems</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="instrument">
+      <div class="inst-header">
+        <span class="inst-title">Platform Telemetry — Live</span>
+        <span class="inst-live"><span class="inst-pip"></span>Live</span>
+      </div>
+      <div class="inst-metrics">
+        <div class="inst-cell">
+          <div class="ic-label">Platform Uptime</div>
+          <div class="ic-val">99.98%</div>
+          <div class="ic-sub">30-day rolling</div>
+        </div>
+        <div class="inst-cell">
+          <div class="ic-label">Signal Events/mo</div>
+          <div class="ic-val">4.8B</div>
+          <div class="ic-sub">Validated telemetry</div>
+        </div>
+        <div class="inst-cell">
+          <div class="ic-label">Operator Latency</div>
+          <div class="ic-val">&lt;45ms</div>
+          <div class="ic-sub">P99 gateway</div>
+        </div>
+        <div class="inst-cell">
+          <div class="ic-label">Deploy Cadence</div>
+          <div class="ic-val">48/day</div>
+          <div class="ic-sub">Verified releases</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-band">
+  <div class="marquee-track">
+    <span class="marquee-item">Risk Intelligence</span>
+    <span class="marquee-item">Financial Signal Analysis</span>
+    <span class="marquee-item">Workflow Automation</span>
+    <span class="marquee-item">AI Implementation</span>
+    <span class="marquee-item">Digital Strategy</span>
+    <span class="marquee-item">Systems Integration</span>
+    <span class="marquee-item">Design & Development</span>
+    <span class="marquee-item">Enterprise Consulting</span>
+    <span class="marquee-item">Sentiment Analysis</span>
+    <span class="marquee-item">Applied Intelligence</span>
+    <span class="marquee-item">Resilient Infrastructure</span>
+    <span class="marquee-item">Cross-Sector Deployment</span>
+    <span class="marquee-item">Risk Intelligence</span>
+    <span class="marquee-item">Financial Signal Analysis</span>
+    <span class="marquee-item">Workflow Automation</span>
+    <span class="marquee-item">AI Implementation</span>
+    <span class="marquee-item">Digital Strategy</span>
+    <span class="marquee-item">Systems Integration</span>
+    <span class="marquee-item">Design & Development</span>
+    <span class="marquee-item">Enterprise Consulting</span>
+    <span class="marquee-item">Sentiment Analysis</span>
+    <span class="marquee-item">Applied Intelligence</span>
+    <span class="marquee-item">Resilient Infrastructure</span>
+    <span class="marquee-item">Cross-Sector Deployment</span>
+  </div>
+</div>
+
+<!-- ═══ CAPABILITIES ═══ -->
+<section class="section capabilities" id="platform">
+  <div class="inner">
+    <div class="cap-aside reveal">
+      <div class="section-label">01 — Capabilities</div>
+      <h2>Cross-<br><span class="outline">Sector.</span><br>Full-Stack.</h2>
+      <p>We operate at the intersection of digital consulting, product engineering, and applied AI — building systems that hold under pressure across every sector we touch.</p>
+    </div>
+
+    <div class="cap-rows">
+      <div class="cap-row reveal">
+        <div class="cap-row-head">
+          <span class="cap-num">01</span>
+          <h3>Risk Intelligence & Financial Signals</h3>
+          <span class="arrow">↗</span>
+        </div>
+        <p>Continuous surveillance across positions, portfolios, and market conditions. Anomaly detection, threshold alerting, operator-in-loop review — built for institutions that cannot afford surprises.</p>
+        <div class="tags">
+          <span class="tag">Risk Radar</span><span class="tag">Sentiment Engine</span>
+          <span class="tag">Market Feeds</span><span class="tag">Alpaca</span><span class="tag">Bloomberg</span>
+        </div>
+      </div>
+
+      <div class="cap-row reveal">
+        <div class="cap-row-head">
+          <span class="cap-num">02</span>
+          <h3>AI Systems & Workflow Automation</h3>
+          <span class="arrow">↗</span>
+        </div>
+        <p>End-to-end workflow design and execution with AI at every node. Queue-backed, auditable, with fallback paths and operator checkpoints. We don't deploy AI that cannot explain itself.</p>
+        <div class="tags">
+          <span class="tag">Gemini</span><span class="tag">GPT-4</span>
+          <span class="tag">Workflow Engine</span><span class="tag">Cloudflare AI</span>
+        </div>
+      </div>
+
+      <div class="cap-row reveal">
+        <div class="cap-row-head">
+          <span class="cap-num">03</span>
+          <h3>Digital Strategy & Systems Consulting</h3>
+          <span class="arrow">↗</span>
+        </div>
+        <p>Architecture planning, vendor evaluation, capability mapping — the upstream work that makes everything downstream coherent. Strategy that ships, not slides.</p>
+        <div class="tags">
+          <span class="tag">Strategy</span><span class="tag">Architecture</span>
+          <span class="tag">Due Diligence</span><span class="tag">Roadmapping</span>
+        </div>
+      </div>
+
+      <div class="cap-row reveal">
+        <div class="cap-row-head">
+          <span class="cap-num">04</span>
+          <h3>Design, Development & Product</h3>
+          <span class="arrow">↗</span>
+        </div>
+        <p>Full-cycle product and software delivery. Brand identity, design systems, Astro frontends, Cloudflare Workers, React Native — shipped on time, built to last.</p>
+        <div class="tags">
+          <span class="tag">Astro</span><span class="tag">React Native</span>
+          <span class="tag">CF Workers</span><span class="tag">Design Systems</span>
+        </div>
+      </div>
+
+      <div class="cap-row reveal">
+        <div class="cap-row-head">
+          <span class="cap-num">05</span>
+          <h3>Resilient Infrastructure & Observability</h3>
+          <span class="arrow">↗</span>
+        </div>
+        <p>Production-grade infrastructure with full observability. Cloudflare Access, D1 databases, KV audit trails, R2 storage — secure by default, traceable at every layer.</p>
+        <div class="tags">
+          <span class="tag">Cloudflare</span><span class="tag">D1</span>
+          <span class="tag">Hono</span><span class="tag">JWKS Auth</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SYSTEMS ═══ -->
+<section class="section systems" id="developer">
+  <div class="inner">
+    <div class="sys-left reveal">
+      <div class="section-label">02 — Under the Hood</div>
+      <h2>Systems that<br><span class="outline">Explain</span><br>Themselves.</h2>
+
+      <div class="code-block">
+        <div class="code-bar">
+          <span class="code-file">packages/auth/verify.ts</span>
+          <span class="code-lang">TypeScript</span>
+        </div>
+        <div class="code-body"><pre><span class="c">// Full JWKS JWT verification — jose</span>
+<span class="k">import</span> &#123; jwtVerify, createRemoteJWKSet &#125;
+  <span class="k">from</span> <span class="s">"jose"</span>;
+
+<span class="k">export async function</span> <span class="f">verifyAccess</span>(
+  req: Request, env: <span class="t">AccessEnv</span>
+): <span class="t">Promise</span>&lt;<span class="t">VerifyResult</span>&gt; &#123;
+  <span class="k">if</span> (!env.CLOUDFLARE_ACCESS_AUDIENCE)
+    <span class="k">return</span> &#123; authorized: <span class="n">false</span> &#125;;
+
+  <span class="k">const</span> JWKS = createRemoteJWKSet(
+    <span class="k">new</span> URL(
+      <span class="s">&#96;&#36;&#123;</span>env.CF_ACCESS_TEAM_DOMAIN<span class="s">&#125;
+      /cdn-cgi/access/certs&#96;</span>
+    )
+  );
+  <span class="k">const</span> &#123; payload &#125; = <span class="k">await</span>
+    <span class="f">jwtVerify</span>(token, JWKS, &#123;
+      issuer:   env.CF_ACCESS_TEAM_DOMAIN,
+      audience: env.CLOUDFLARE_ACCESS_AUDIENCE
+    &#125;);
+  <span class="k">return</span> &#123; authorized: <span class="n">true</span>,
+             email: payload.email &#125;;
+&#125;</pre></div>
+      </div>
+    </div>
+
+    <div class="sys-right reveal">
+      <div class="section-label" style="margin-bottom:2rem;">Production Stack — goldshore.ai</div>
+
+      <div class="worker-table">
+        <div class="wt-row">
+          <span class="wt-name">gs-gateway</span>
+          <span class="wt-role">Ingress, CORS, auth, integration routing</span>
+          <span class="wt-date">Mar 29</span>
+          <span class="wt-status live">Live</span>
+        </div>
+        <div class="wt-row">
+          <span class="wt-name">gs-agent</span>
+          <span class="wt-role">Autonomous processor, queue consumer</span>
+          <span class="wt-date">Mar 19</span>
+          <span class="wt-status live">Live</span>
+        </div>
+        <div class="wt-row">
+          <span class="wt-name">gs-api</span>
+          <span class="wt-role">Core API, data access layer</span>
+          <span class="wt-date">Mar 22</span>
+          <span class="wt-status live">Live</span>
+        </div>
+        <div class="wt-row">
+          <span class="wt-name">gs-mail</span>
+          <span class="wt-role">Transactional mail service</span>
+          <span class="wt-date">Mar 29</span>
+          <span class="wt-status live">Live</span>
+        </div>
+        <div class="wt-row">
+          <span class="wt-name">gs-control</span>
+          <span class="wt-role">Control plane, operator interface</span>
+          <span class="wt-date">Mar 22</span>
+          <span class="wt-status live">Live</span>
+        </div>
+      </div>
+
+      <div style="margin-top:1.5rem;padding:1.25rem;background:var(--plate);border:1px solid var(--b1);">
+        <div style="font-family:var(--font-mono);font-size:0.47rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--t4);margin-bottom:0.85rem;">Infrastructure Resources</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;font-family:var(--font-mono);font-size:0.55rem;color:var(--t4);">
+          <div>R2 Buckets<br><span style="color:var(--t3);font-size:0.6rem;">gs-assets · gs-telemetry · user-uploads</span></div>
+          <div>D1 Databases<br><span style="color:var(--t3);font-size:0.6rem;">gs_platform_db · gs_audit_db</span></div>
+          <div>CF Account<br><span style="color:var(--t3);font-size:0.6rem;">Gold Shore Labs · f77de112</span></div>
+          <div>Stack<br><span style="color:var(--t3);font-size:0.6rem;">Hono 4.12.7 · pnpm · wrangler 4.75</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RADAR ═══ -->
+<section class="section radar-section">
+  <div class="inner">
+    <div class="radar-left reveal">
+      <div class="section-label">03 — Risk Radar</div>
+      <h2>Always<br>Sweeping.<br><span class="outline">Never</span> Silent.</h2>
+      <p>Continuous surveillance across monitored positions and portfolios. Anomalies surface in real time — classified by severity, routed to the right operator, with a full audit trace from detection to resolution.</p>
+
+      <div class="radar-stats">
+        <div>
+          <div class="rstat-l">Sweep Interval</div>
+          <div class="rstat-v">2.4s</div>
+        </div>
+        <div>
+          <div class="rstat-l">Active Anomalies</div>
+          <div class="rstat-v">5 Live</div>
+        </div>
+        <div>
+          <div class="rstat-l">Decision Mode</div>
+          <div class="rstat-v">Human+AI</div>
+        </div>
+        <div>
+          <div class="rstat-l">Review Posture</div>
+          <div class="rstat-v">High Trust</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="radar-right reveal">
+      <div class="radar-wrap">
+        <canvas id="radarCanvas" width="360" height="360"></canvas>
+      </div>
+      <div class="readout-table">
+        <div class="readout-row">
+          <span class="re">ALGO-DRIFT — Position delta exceeds 3σ</span>
+          <span class="rsev h">High</span>
+          <span class="rts">00:42</span>
+        </div>
+        <div class="readout-row">
+          <span class="re">SENTIMENT — NVDA neg. velocity +18%</span>
+          <span class="rsev m">Med</span>
+          <span class="rts">01:14</span>
+        </div>
+        <div class="readout-row">
+          <span class="re">LATENCY — GW P99 at 42ms (limit 45ms)</span>
+          <span class="rsev l">Low</span>
+          <span class="rts">02:07</span>
+        </div>
+        <div class="readout-row">
+          <span class="re">CORRELATION — BTC/SPX decoupling</span>
+          <span class="rsev m">Med</span>
+          <span class="rts">03:55</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SIGNALS ═══ -->
+<section class="section signals-section">
+  <div class="signals-header reveal">
+    <div>
+      <div class="section-label">04 — Financial Signals</div>
+      <h2>Signal,<br><span class="outline">Not</span> Noise.</h2>
+    </div>
+    <a href="#" class="btn-hero-secondary" style="align-self:flex-end;">Full Signal Feed →</a>
+  </div>
+
+  <div class="signals-body reveal">
+    <div class="ticker-col">
+      <div class="ticker-item active">
+        <span class="tsym">SPY</span><span class="tname">S&amp;P 500</span>
+        <span class="tprice">521.84</span><span class="tchg up">+1.24%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="tsym">NVDA</span><span class="tname">Nvidia</span>
+        <span class="tprice">887.22</span><span class="tchg up">+2.87%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="tsym">BTC</span><span class="tname">Bitcoin</span>
+        <span class="tprice">68,420</span><span class="tchg dn">−0.43%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="tsym">GLD</span><span class="tname">Gold</span>
+        <span class="tprice">2,391</span><span class="tchg up">+0.61%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="tsym">TLT</span><span class="tname">20Y Tsy</span>
+        <span class="tprice">93.14</span><span class="tchg dn">−0.18%</span>
+      </div>
+      <div class="ticker-item">
+        <span class="tsym">VIX</span><span class="tname">Volatility</span>
+        <span class="tprice">13.82</span><span class="tchg fl">−3.20%</span>
+      </div>
+    </div>
+
+    <div class="chart-panel">
+      <div class="chart-top">
+        <div>
+          <div class="chart-sym">SPY</div>
+          <div class="chart-desc">SPDR S&amp;P 500 ETF · NYSE Arca · 4h</div>
+        </div>
+        <div class="chart-price">
+          <div class="chart-price-val">&#36;521.84</div>
+          <div class="chart-price-chg">▲ +6.37 (+1.24%)</div>
+        </div>
+      </div>
+      <div class="chart-cvs"><canvas id="chartCanvas" width="700" height="110"></canvas></div>
+      <div class="chart-inds">
+        <div class="ind">RSI 14<span class="ind-v up">58.4</span></div>
+        <div class="ind">MACD<span class="ind-v up">+2.1</span></div>
+        <div class="ind">Vol 10d<span class="ind-v">12.3%</span></div>
+        <div class="ind">Beta<span class="ind-v">1.00</span></div>
+        <div class="ind">Sentiment<span class="ind-v up">Bullish</span></div>
+        <div class="ind">Signal<span class="ind-v w">Watch</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ APPROACH ═══ -->
+<section class="section approach">
+  <div class="inner reveal">
+    <div class="approach-col">
+      <div class="approach-num">01</div>
+      <h3>Sector-Agnostic, Systems-First</h3>
+      <p>We don't specialize in one vertical — we specialize in the architecture that makes any vertical work. Finance, operations, media, healthcare: the discipline is identical.</p>
+    </div>
+    <div class="approach-col">
+      <div class="approach-num">02</div>
+      <h3>AI as Infrastructure, Not Feature</h3>
+      <p>Intelligence embedded at the routing layer, not bolted on at the end. Every workflow treats AI as a first-class component with audit trails to match.</p>
+    </div>
+    <div class="approach-col">
+      <div class="approach-num">03</div>
+      <h3>Consulting That Ships</h3>
+      <p>Strategy without delivery is overhead. We provide the advisory and we build the thing — one team, one contract, full accountability from brief to production.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="section cta-section">
+  <div class="inner">
+    <div class="cta-left reveal">
+      <div class="section-label">05 — Engage</div>
+      <h2>Ready to<br><span class="outline">Operationalize.</span></h2>
+      <p>Whether you need a strategic briefing, a technical audit, a delivered product, or an embedded AI system — the conversation starts here.</p>
+      <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+        <a href="#" class="btn-hero-primary" onclick="openModal();return false;">Request Briefing →</a>
+        <a href="#" class="btn-hero-secondary">Developer Hub →</a>
+      </div>
+    </div>
+
+    <div class="cta-right reveal">
+      <div class="form-stack">
+        <form method="post" action="https://api.goldshore.org/v1/lead">
+          <div style="font-family:var(--font-mono);font-size:0.48rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--t4);margin-bottom:0.25rem;">Quick Inquiry</div>
+          <div class="form-row">
+            <div><label class="form-label">Name</label><input type="text" name="name" class="form-input" placeholder="Your name"></div>
+            <div><label class="form-label">Organisation</label><input type="text" name="organization" class="form-input" placeholder="Firm or company"></div>
+          </div>
+          <div><label class="form-label">Work Email</label><input type="email" name="email" class="form-input" placeholder="you@firm.com" required></div>
+          <div>
+            <label class="form-label">Interest</label>
+            <select name="interest" class="form-select">
+              <option value="">Select area of interest</option>
+              <option>Risk Intelligence</option>
+              <option>AI Implementation</option>
+              <option>Digital Strategy</option>
+              <option>Design & Development</option>
+              <option>Infrastructure</option>
+              <option>Full-scope Engagement</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-form">Submit Request →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-main">
+    <div class="footer-brand">
+      <span class="nav-wordmark">GoldShore</span>
+      <span class="nav-sub" style="display:block;margin-top:4px;">Applied Intelligence · Digital Systems · Consulting</span>
+      <p>Institutional AI systems, risk tooling, and resilient operator infrastructure. Cross-sector. Full-stack. Built to last.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Platform</h4>
+      <ul>
+        <li><a href="#">Risk Radar</a></li>
+        <li><a href="#">Financial Signals</a></li>
+        <li><a href="#">Workflow Engine</a></li>
+        <li><a href="#">Sentinel</a></li>
+        <li><a href="#">AI Oracle</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#">Digital Strategy</a></li>
+        <li><a href="#">AI Implementation</a></li>
+        <li><a href="#">Systems Integration</a></li>
+        <li><a href="#">Design & Dev</a></li>
+        <li><a href="#">Consulting</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Team</a></li>
+        <li><a href="#">Developer Hub</a></li>
+        <li><a href="#">Status</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Gold Shore Labs. All rights reserved.</span>
+    <span>40°42′N · 074°00′W · goldshore.ai</span>
+    <span>Privacy · Security · Terms</span>
+  </div>
+</footer>
+
+<!-- ═══ MODAL ═══ -->
+<div class="overlay" id="modal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div>
+        <div class="modal-title">Request a Briefing</div>
+        <div class="modal-sub">Gold Shore Labs · Confidential</div>
+      </div>
+      <button class="modal-x" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <form method="post" action="https://api.goldshore.org/v1/lead">
+        <div class="mf">
+          <div class="mf-row">
+            <div><label>First name</label><input type="text" name="first_name" placeholder="Robert"></div>
+            <div><label>Last name</label><input type="text" name="last_name" placeholder="Marston"></div>
+          </div>
+        </div>
+        <div class="mf"><label>Work email</label><input type="email" name="email" placeholder="you@firm.com" required></div>
+        <div class="mf"><label>Organisation</label><input type="text" name="organization" placeholder="Firm or company name"></div>
+        <div class="mf">
+          <label>Primary interest</label>
+          <select name="interest">
+            <option value="">Select a focus area</option>
+            <option>Risk Intelligence & Surveillance</option>
+            <option>AI Systems & Workflow Automation</option>
+            <option>Digital Strategy & Consulting</option>
+            <option>Design, Development & Product</option>
+            <option>Infrastructure & Observability</option>
+            <option>Full-scope Engagement</option>
+          </select>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn-ghost" onclick="closeModal()" style="cursor:pointer;">Cancel</button>
+          <button type="submit" class="btn-primary" style="cursor:pointer;">Submit Request →</button>
+        </div>
       </form>
-    </section>
-  </main>
-</Base>
+    </div>
+  </div>
+</div>
+
+<script src="/v3.js"></script>
+</body>
+</html>
