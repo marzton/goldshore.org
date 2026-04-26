@@ -9,7 +9,7 @@ APP_NAME = "GoldShore"
 PRODUCTION_ASSETS = "https://goldshore-org.pages.dev"
 PREVIEW_ASSETS = "https://preview.goldshore-org.pages.dev"
 DEV_ASSETS = "https://dev.goldshore-org.pages.dev"
-GPT_ALLOWED_ORIGINS = "https://goldshore.org, https://www.goldshore.org, https://preview.goldshore.org, https://dev.goldshore.org, https://trade.goldshore.org"
+GPT_ALLOWED_ORIGINS = "https://goldshore.org, https://www.goldshore.org, https://goldshore.ai, https://www.goldshore.ai, https://preview.goldshore.org, https://dev.goldshore.org, https://trade.goldshore.org"
 # Secrets such as FORMSPREE_ENDPOINT, TURNSTILE_SECRET, OPENAI_API_KEY, and
 # GPT_SHARED_SECRET (or legacy GPT_PROXY_SECRET) are provided via
 # `wrangler secret put …` or `.dev.vars` in local development.
@@ -21,6 +21,8 @@ enabled = true
 routes = [
   "goldshore.org/*",
   "www.goldshore.org/*",
+  "goldshore.ai/*",
+  "www.goldshore.ai/*",
 ]
 
 [env.production.vars]

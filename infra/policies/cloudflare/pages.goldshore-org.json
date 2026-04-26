@@ -48,7 +48,7 @@
   "build_config": {
     "build_command": "pnpm --filter @goldshore/web build",
     "destination_dir": "apps/goldshore-web/dist",
-    "web_analytics_tag": "goldshore-org",
+    "web_analytics_tag": "goldshore-web",
     "web_analytics_token": "${CF_WEB_ANALYTICS_TOKEN}"
   }
 }
