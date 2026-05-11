@@ -9,7 +9,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.2.1",
+    "@astrojs/cloudflare": "^11.0.0",
     "@goldshore/assets": "file:../../packages/assets",
     "@goldshore/theme": "file:../../packages/theme",
     "astro": "^6.1.3",
