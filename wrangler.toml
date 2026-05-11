@@ -1,15 +1,15 @@
 # Cloudflare Worker router for goldshore.org. The marketing site lives on
 # Cloudflare Pages while this Worker owns the custom domains and GPT proxy.
-name = "goldshore-web-router"
+name = "goldshore-org"
 main = "src/router.js"
 compatibility_date = "2025-10-05"
 
 [vars]
 APP_NAME = "GoldShore"
 PRODUCTION_ASSETS = "https://goldshore-org.pages.dev"
-PREVIEW_ASSETS = "https://goldshore-org-preview.pages.dev"
-DEV_ASSETS = "https://goldshore-org-dev.pages.dev"
-GPT_ALLOWED_ORIGINS = "https://goldshore.org, https://www.goldshore.org, https://preview.goldshore.org, https://dev.goldshore.org, https://trade.goldshore.org"
+PREVIEW_ASSETS = "https://preview.goldshore-org.pages.dev"
+DEV_ASSETS = "https://dev.goldshore-org.pages.dev"
+GPT_ALLOWED_ORIGINS = "https://goldshore.org, https://www.goldshore.org, https://goldshore.ai, https://www.goldshore.ai, https://preview.goldshore.org, https://dev.goldshore.org, https://trade.goldshore.org"
 # Secrets such as FORMSPREE_ENDPOINT, TURNSTILE_SECRET, OPENAI_API_KEY, and
 # GPT_SHARED_SECRET (or legacy GPT_PROXY_SECRET) are provided via
 # `wrangler secret put …` or `.dev.vars` in local development.
@@ -21,6 +21,8 @@ enabled = true
 routes = [
   "goldshore.org/*",
   "www.goldshore.org/*",
+  "goldshore.ai/*",
+  "www.goldshore.ai/*",
 ]
 
 [env.production.vars]
@@ -33,17 +35,17 @@ CF_ACCESS_JWKS_URL = "https://rmarston.cloudflareaccess.com/cdn-cgi/access/certs
 [[env.production.services]]
 binding = "API"
 service = "goldshore-api"
-environment = "production"
+environment = "prod"
 
 [[env.production.analytics_engine_datasets]]
 binding = "WEB_ANALYTICS"
-dataset = "goldshore-web-events"
+dataset = "goldshore-org-events"
 
 [env.preview]
 routes = ["preview.goldshore.org/*"]
 
 [env.preview.vars]
-ASSETS_ORIGIN = "https://goldshore-org-preview.pages.dev"
+ASSETS_ORIGIN = "https://preview.goldshore-org.pages.dev"
 # Keep ASSETS_ORIGIN on non-routed Pages hostnames to avoid Worker self-targeting loops.
 
 [[env.preview.services]]
@@ -55,10 +57,10 @@ environment = "preview"
 routes = ["dev.goldshore.org/*"]
 
 [env.development.vars]
-ASSETS_ORIGIN = "https://goldshore-org-dev.pages.dev"
+ASSETS_ORIGIN = "https://dev.goldshore-org.pages.dev"
 # Keep ASSETS_ORIGIN on non-routed Pages hostnames to avoid Worker self-targeting loops.
 
 [[env.development.services]]
 binding = "API"
 service = "goldshore-api"
-environment = "development"
+environment = "dev"

@@ -8,11 +8,23 @@ API_BASE="https://api.cloudflare.com/client/v4"
 AUTH_HEADER="Authorization: Bearer ${CF_API_TOKEN}"
 CONTENT_TYPE_HEADER="Content-Type: application/json"
 
+WEB_PROD_TARGET=${WEB_PROD_TARGET:-"goldshore-org.pages.dev"}
+WEB_PREVIEW_TARGET=${WEB_PREVIEW_TARGET:-"preview.goldshore-org.pages.dev"}
+WEB_DEV_TARGET=${WEB_DEV_TARGET:-"dev.goldshore-org.pages.dev"}
+API_WORKER=${API_WORKER:-"goldshore-api"}
+WORKERS_SUBDOMAIN=${WORKERS_SUBDOMAIN:-"goldshore"}
+API_TARGET="${API_WORKER}.${WORKERS_SUBDOMAIN}.workers.dev"
+
 # Desired state for DNS records
 RECORDS=(
   # type|name|content|proxied
-  "CNAME|goldshore.org|goldshore-org.pages.dev|true"
-  "CNAME|api.goldshore.org|goldshore-api.goldshore.workers.dev|true"
+  "CNAME|goldshore.org|${WEB_PROD_TARGET}|true"
+  "CNAME|www.goldshore.org|goldshore.org|true"
+  "CNAME|preview.goldshore.org|${WEB_PREVIEW_TARGET}|true"
+  "CNAME|dev.goldshore.org|${WEB_DEV_TARGET}|true"
+  "CNAME|api.goldshore.org|${API_TARGET}|true"
+  "CNAME|api-preview.goldshore.org|${API_TARGET}|true"
+  "CNAME|api-dev.goldshore.org|${API_TARGET}|true"
   "TXT|_dmarc.goldshore.org|v=DMARC1; p=reject; rua=mailto:ops@goldshore.org; ruf=mailto:ops@goldshore.org; fo=1|false"
   "TXT|goldshore.org|v=spf1 include:_spf.google.com -all|false"
 )

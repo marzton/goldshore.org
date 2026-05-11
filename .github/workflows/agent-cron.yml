@@ -17,8 +17,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - run: npm install --no-package-lock
-      - run: npm run agent:poll
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm run agent:poll
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
