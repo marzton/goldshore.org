@@ -7,27 +7,70 @@ workers_dev = true
 CF_TEAM_DOMAIN = "goldshore"
 
 [env.dev]
-# Add dev-specific bindings and variables here
+workers_dev = true
+routes = [
+  { pattern = "api-dev.goldshore.org/*", zone_name = "goldshore.org" }
+]
+
+[[env.dev.d1_databases]]
+binding = "DB"
+database_name = "goldshore-cms-dev"
+database_id = "${D1_DATABASE_ID_DEV}"
+
+[[env.dev.r2_buckets]]
+binding = "ASSETS"
+bucket_name = "${R2_BUCKET_NAME_DEV}"
+
+[[env.dev.kv_namespaces]]
+binding = "SITE_KV"
+id = "${KV_NAMESPACE_ID_DEV}"
+
+[[env.dev.queues]]
+binding = "JOBS"
+queue_name = "${QUEUE_NAME_DEV}"
 
 [env.preview]
-# Add preview-specific bindings and variables here
+workers_dev = true
+routes = [
+  { pattern = "api-preview.goldshore.org/*", zone_name = "goldshore.org" }
+]
+
+[[env.preview.d1_databases]]
+binding = "DB"
+database_name = "goldshore-cms-preview"
+database_id = "${D1_DATABASE_ID_PREVIEW}"
+
+[[env.preview.r2_buckets]]
+binding = "ASSETS"
+bucket_name = "${R2_BUCKET_NAME_PREVIEW}"
+
+[[env.preview.kv_namespaces]]
+binding = "SITE_KV"
+id = "${KV_NAMESPACE_ID_PREVIEW}"
+
+[[env.preview.queues]]
+binding = "JOBS"
+queue_name = "${QUEUE_NAME_PREVIEW}"
 
 [env.prod]
-# Add prod-specific bindings and variables here
+workers_dev = false
+routes = [
+  { pattern = "api.goldshore.org/*", zone_name = "goldshore.org" }
+]
 
-[[d1_databases]]
+[[env.prod.d1_databases]]
 binding = "DB"
-database_name = "goldshore_cms"
-database_id = "your-d1-database-id"
+database_name = "goldshore-cms"
+database_id = "${D1_DATABASE_ID_PROD}"
 
-[[r2_buckets]]
+[[env.prod.r2_buckets]]
 binding = "ASSETS"
-bucket_name = "assets"
+bucket_name = "${R2_BUCKET_NAME_PROD}"
 
-[[kv_namespaces]]
+[[env.prod.kv_namespaces]]
 binding = "SITE_KV"
-id = "your-kv-namespace-id"
+id = "${KV_NAMESPACE_ID_PROD}"
 
-[[queues]]
+[[env.prod.queues]]
 binding = "JOBS"
-queue_name = "goldshore-jobs"
+queue_name = "${QUEUE_NAME_PROD}"

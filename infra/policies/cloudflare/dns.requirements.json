@@ -24,7 +24,7 @@
     {
       "type": "CNAME",
       "name": "preview",
-      "content": "goldshore-org-preview.pages.dev",
+      "content": "preview.goldshore-org.pages.dev",
       "proxied": true,
       "ttl": 3600,
       "required": true,
@@ -33,7 +33,7 @@
     {
       "type": "CNAME",
       "name": "dev",
-      "content": "goldshore-org-dev.pages.dev",
+      "content": "dev.goldshore-org.pages.dev",
       "proxied": true,
       "ttl": 3600,
       "required": true,

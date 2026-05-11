@@ -1,4 +1,4 @@
-# NOTE: Mirrored from infra/github/actions/workflows/apply-policies.yml
+# Canonical workflow location: .github/workflows/
 name: Apply policies
 
 on:
@@ -28,7 +28,7 @@ jobs:
           jq empty infra/policies/github/ruleset.protected-branches.json
           jq empty infra/policies/github/environment.production.json
           jq empty infra/policies/github/repository.settings.json
-          jq empty infra/policies/cloudflare/pages.goldshore-web.json
+          jq empty infra/policies/cloudflare/pages.goldshore-org.json
           jq empty infra/policies/cloudflare/workers.goldshore-api.json
           jq empty infra/policies/cloudflare/dns.requirements.json
           jq empty infra/policies/email/dmarc_spf.json
@@ -96,7 +96,7 @@ jobs:
     # Required secrets/variables:
     #   - secrets.CF_API_TOKEN: API token with Pages, Workers, and Logpush permissions.
     #   - secrets.CF_ACCOUNT_ID or vars.CF_ACCOUNT_ID: Cloudflare account identifier.
-    #   - secrets.CF_WEB_ANALYTICS_TOKEN or vars.CF_WEB_ANALYTICS_TOKEN: Analytics token for the goldshore-web Pages project.
+    #   - secrets.CF_WEB_ANALYTICS_TOKEN or vars.CF_WEB_ANALYTICS_TOKEN: Analytics token for the goldshore-org Pages project.
     #   - secrets.AGENT_PROMPT_KV_ID or vars.AGENT_PROMPT_KV_ID: KV namespace ID for the API worker prompt store binding.
     #   - secrets.KV_SESSIONS_PROD / _PREVIEW / _DEV or matching vars: KV namespace IDs for the API gateway environments.
     #   - secrets.KV_CACHE_PROD or vars.KV_CACHE_PROD: KV namespace ID for the API gateway cache binding.
