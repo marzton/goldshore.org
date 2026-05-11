@@ -328,29 +328,29 @@ import "../styles/v3.css";
           <span class="code-lang">TypeScript</span>
         </div>
         <div class="code-body"><pre><span class="c">// Full JWKS JWT verification — jose</span>
-<span class="k">import</span> &#123; jwtVerify, createRemoteJWKSet &#125;
+<span class="k">import</span> &lbrace; jwtVerify, createRemoteJWKSet &rbrace;
   <span class="k">from</span> <span class="s">"jose"</span>;
 
 <span class="k">export async function</span> <span class="f">verifyAccess</span>(
   req: Request, env: <span class="t">AccessEnv</span>
-): <span class="t">Promise</span>&lt;<span class="t">VerifyResult</span>&gt; &#123;
+): <span class="t">Promise</span>&lt;<span class="t">VerifyResult</span>&gt; &lbrace;
   <span class="k">if</span> (!env.CLOUDFLARE_ACCESS_AUDIENCE)
-    <span class="k">return</span> &#123; authorized: <span class="n">false</span> &#125;;
+    <span class="k">return</span> &lbrace; authorized: <span class="n">false</span> &rbrace;;
 
   <span class="k">const</span> JWKS = createRemoteJWKSet(
     <span class="k">new</span> URL(
-      <span class="s">&#96;&#36;&#123;</span>env.CF_ACCESS_TEAM_DOMAIN<span class="s">&#125;
-      /cdn-cgi/access/certs&#96;</span>
+      <span class="s">`&#36;&lbrace;</span>env.CF_ACCESS_TEAM_DOMAIN<span class="s">&rbrace;
+      /cdn-cgi/access/certs`</span>
     )
   );
-  <span class="k">const</span> &#123; payload &#125; = <span class="k">await</span>
-    <span class="f">jwtVerify</span>(token, JWKS, &#123;
+  <span class="k">const</span> &lbrace; payload &rbrace; = <span class="k">await</span>
+    <span class="f">jwtVerify</span>(token, JWKS, &lbrace;
       issuer:   env.CF_ACCESS_TEAM_DOMAIN,
       audience: env.CLOUDFLARE_ACCESS_AUDIENCE
-    &#125;);
-  <span class="k">return</span> &#123; authorized: <span class="n">true</span>,
-             email: payload.email &#125;;
-&#125;</pre></div>
+    &rbrace;);
+  <span class="k">return</span> &lbrace; authorized: <span class="n">true</span>,
+             email: payload.email &rbrace;;
+&rbrace;</pre></div>
       </div>
     </div>
 

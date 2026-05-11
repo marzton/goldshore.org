@@ -15,21 +15,21 @@
   },
   "environments": {
     "production": {
-      "pages_project": "goldshore-web",
+      "pages_project": "goldshore-org",
       "notes": "Primary public site served directly from the Pages project."
     },
     "preview": {
-      "pages_project": "goldshore-web",
+      "pages_project": "goldshore-org",
       "notes": "Stakeholder previews mapped to preview Pages deployments."
     },
     "development": {
-      "pages_project": "goldshore-web",
+      "pages_project": "goldshore-org",
       "notes": "Internal developer sandbox."
     }
   },
   "pages_projects": [
     {
-      "name": "goldshore-web",
+      "name": "goldshore-org",
       "production_branch": "main",
       "preview_branches": [
         "preview",
